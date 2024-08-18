@@ -22,19 +22,41 @@ def threaded(fn):
 
 
 class json_io:
+
+    # Appends a dictionary object to json array
     @staticmethod
     def append_to_json(dict_object, file_name):
         if type(dict_object) == dict:
-            with open(file_name) as jsoni:
+            with open(file_name, 'r') as jsoni:
                 listobj = json.load(jsoni)
                 listobj.append(dict_object)
 
             with open(file_name, 'w') as jsonw:
                 json.dump(listobj, jsonw, indent=4, separators=(',', ': '))
 
+    # Checks if json structure is an empty array
     @staticmethod
-    def check_file_exists(file_name):
-        if os.path.isfile(file_name) is False:
-            f = open(file_name, 'w')
-            f.close()
+    def check_json_arr(file_name):
+        jsoni = open(file_name, 'r')
+        try:
+            listobj = json.load(jsoni)
+            if listobj != list: # Json array not present
+                jsoni.close()
+                os.remove(file_name)
+                json_io.check_file(file_name)
+        except: # Unacceptable Json structure
+            jsoni.close()
+            os.remove(file_name)
+            json_io.check_file(file_name)
+        finally:
+            jsoni.close()
 
+    # Checks for healthy file
+    @staticmethod
+    def check_file(file_name):
+        if os.path.isfile(file_name) is False:  # File doesn't exist
+            with open(file_name, 'w') as jsonw:
+                data = []
+                json.dump(data, jsonw, indent=4)
+        else:  # File exists but needs to get checked
+            json_io.check_json_arr(file_name)
