@@ -25,7 +25,7 @@ class json_io:
 
     # Appends a dictionary object to json array
     @staticmethod
-    def append_to_json(dict_object, file_name):
+    def append_to_json(file_name, dict_object):
         if type(dict_object) == dict:
             with open(file_name, 'r') as jsoni:
                 listobj = json.load(jsoni)
@@ -40,11 +40,11 @@ class json_io:
         jsoni = open(file_name, 'r')
         try:
             listobj = json.load(jsoni)
-            if listobj != list: # Json array not present
+            if type(listobj) != list:  # Json array not present
                 jsoni.close()
                 os.remove(file_name)
                 json_io.check_file(file_name)
-        except: # Unacceptable Json structure
+        except:  # Unacceptable Json structure
             jsoni.close()
             os.remove(file_name)
             json_io.check_file(file_name)
@@ -60,3 +60,11 @@ class json_io:
                 json.dump(data, jsonw, indent=4)
         else:  # File exists but needs to get checked
             json_io.check_json_arr(file_name)
+
+    @staticmethod
+    def search_json(file_name, search_key, search_value):
+        with open(file_name, 'r') as jsoni:
+            listobj = json.load(jsoni)
+            for dict_object in listobj:
+                if dict_object[search_key] == search_value:
+                    return dict_object
