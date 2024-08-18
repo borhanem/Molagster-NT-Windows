@@ -22,6 +22,7 @@ def threaded(fn):
 
 
 class json_io:
+    # TODO: Check for duplicate entries in a json
 
     # Appends a dictionary object to json array
     @staticmethod
@@ -68,3 +69,10 @@ class json_io:
             for dict_object in listobj:
                 if dict_object[search_key] == search_value:
                     return dict_object
+        return None
+
+    @staticmethod
+    def list_getter(file_name):
+        with open(file_name, 'r') as jsoni:
+            listobj = json.load(jsoni)
+            return listobj
