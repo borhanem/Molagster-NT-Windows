@@ -1,12 +1,6 @@
-import os
 import platform
-import sys
-
-import helper_module as helper
 from pyuac import main_requires_admin
 from scapy.all import *
-import socket
-import subprocess
 
 
 # TODO : fix admin problems
