@@ -12,7 +12,7 @@ class Arp_Scan:
         broadcast_ether_arp_req_frame = broadcast_ether_frame / arp_req_frame
 
         answered_list = scapy.srp(broadcast_ether_arp_req_frame, timeout=1, verbose=False)[0]
-        # print(answered_list)
+        print(answered_list)
         # print(150 * '_')
         # print(type(answered_list))
         result = []
@@ -27,3 +27,25 @@ class Arp_Scan:
     def display_result(result):
         for element in result:
             print(f"IP: {element['ip']} MAC: {element['mac']}")
+
+
+class Port_Scan:
+    @staticmethod
+    def scan_tcp_port(ip, port):
+        # bool return port existence
+        # syn scan or what
+        pass
+
+    @staticmethod
+    def scan_device(ip):
+        # scans all ports using a for loop
+        # returns a list or sth
+        pass
+
+    @staticmethod
+    def scan_device_intense(ip):
+        pass
+
+    @staticmethod
+    def display_result(result):
+        pass

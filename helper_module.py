@@ -4,6 +4,20 @@ import os
 import json
 
 
+def ipv4_subnet_address_extractor(ip, mask):
+    mask_list = mask.split(".")
+    ip_list = ip.split(".")
+    net_list = [None] * 4
+    for i in range(4):
+        ip_field = int(ip_list[i])
+        mask_field = int(mask_list[i])
+        net_list[i] = ip_field & mask_field
+    net_addr = ""
+    for i in range(4):
+        net_addr += str(net_list[i]) + '.'
+    net_addr = net_addr[:-1]
+    return net_addr
+
 def ip_validator(input_str):
     try:
         ipaddress.ip_address(input_str)
